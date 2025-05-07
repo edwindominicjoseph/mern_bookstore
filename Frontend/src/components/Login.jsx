@@ -35,7 +35,7 @@ const login = () => {
                 </div>
                 {message && <p className='text-red-500 text-xs italic mb-3'>{message}</p>}
                 <div>
-                    <button className='bg-blue-500 hover:bg-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full' type='submit'>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full' type='submit'>
 
                         Login
                       
