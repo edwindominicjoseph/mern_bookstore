@@ -7,10 +7,13 @@ import { HiOutlineHeart } from 'react-icons/hi2'
 import { HiOutlineShoppingCart } from 'react-icons/hi2'
 import avatarimg from '../assets/avatar.png'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 const Navbar = () => {
     
     const [isDropdownOpen, setIsDropdownOpen]= useState(false);
     console.log(isDropdownOpen)
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    console.log(cartItems)
     const currentUser = false; // Replace with actual user state
 
     const navigation = [
@@ -63,7 +66,10 @@ return (
                     </button>
                     <Link to="/cart" className='bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm'>
                             <HiOutlineShoppingCart className='size-6' />
-                            <span className='text-sm font-semibold sm:ml-1'>0</span>
+                            {
+                                cartItems.length > 0 ? <span className='text-sm font-semibold sm:ml-1'>{cartItems.length}</span> : <span className='text-sm font-semibold sm:ml-1'>0</span>
+                            }
+                            
                     </Link>
             </div>
             </nav>
