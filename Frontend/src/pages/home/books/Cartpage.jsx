@@ -104,13 +104,15 @@ const CartPage = () => {
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <Link to="/">
-                            or
+                        
                             <button
                                 type="button"
+                                
                                 className="font-medium text-indigo-600 hover:text-indigo-500 ml-1"
                             >
                                 Continue Shopping
                                 <span aria-hidden="true"> &rarr;</span>
+                            
                             </button>
                         </Link>
                     </div>
