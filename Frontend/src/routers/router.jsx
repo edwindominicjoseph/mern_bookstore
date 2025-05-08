@@ -4,6 +4,7 @@ import Home from "../pages/home/home.jsx";
 import Register from "../components/Register.jsx";
 import Login from "../components/login.jsx";
 import React from 'react';
+import Cartpage from "../pages/home/books/Cartpage.jsx";
 const router = createBrowserRouter([
     {
       path: "/",
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
         },
         {
           path: "/cart",
-          element: <div>Cart</div>,
+          element: <Cartpage />,
         },
         {
           path: "/about",
