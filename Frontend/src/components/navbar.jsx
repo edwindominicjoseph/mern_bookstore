@@ -13,8 +13,7 @@ const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen]= useState(false);
     console.log(isDropdownOpen)
     const cartItems = useSelector((state) => state.cart.cartItems);
-    console.log(cartItems)
-    const currentUser = false; // Replace with actual user state
+    const currentUser = true; // Replace with actual user state
 
     const navigation = [
         { name: 'Dashboard', href: '/dashboard' },
