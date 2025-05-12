@@ -3,15 +3,40 @@ import { Link } from 'react-router-dom'
 import { FaGoogle } from 'react-icons/fa'
 import { useForm } from "react-hook-form";
 import { useState } from 'react'
+import { useAuth } from '../context/authcontext'
+import { useNavigate } from 'react-router-dom';
 
 
+
+
+
+
+ 
 const Register = () => {
    const [message, setMessage] = useState("")
-      const { register, handleSubmit, watch, formState: { errors } } = useForm();
-      const onSubmit = data => console.log(data);
-      const handleGoogleSignIn = () => {
-          // Handle Google sign-in logic here
-          console.log("Google Sign-In clicked");
+   const{registerUser, googleSignIn } = useAuth()
+      const { register, handleSubmit } = useForm();
+      const navigate = useNavigate()
+      const onSubmit = async(data) => {
+        console.log(data)
+        try {
+            await registerUser(data.email, data.password)
+            alert("Registration successful")
+        } catch (error) {
+            console.log(error)
+            setMessage("please provide a valid email and password.")
+            
+        }
+    }
+      const handleGoogleSignIn = async() => {
+        try { 
+            await googleSignIn();
+            alert("Google Sign-in successful");
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+            alert("Google Sign-in failed.");
+        }
       };
   return (
     <div>
@@ -49,7 +74,7 @@ const Register = () => {
                        onClick={handleGoogleSignIn}
                       className='w-full flex flex-wrap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none'>
                          <FaGoogle className='mr-2' />
-                           Sign in with Google
+                           Sign up with Google
                      </button>
                  </div>
                  <p className='mt-5 text-center text-gray-500 text-xs'>©2025 Book Store. All rights reserved.</p>
