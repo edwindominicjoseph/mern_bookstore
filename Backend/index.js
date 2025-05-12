@@ -8,7 +8,7 @@ require('dotenv').config()
 // *middleware */
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:5173/",
+    origin: "http://localhost:5173",
     credentials: true,
 }))
 
@@ -16,10 +16,7 @@ app.use(cors({
 const bookRoute = require('./src/Books/book.route')
 app.use("/api/books", bookRoute);
 
-
-
-
-
+// *connect to mongodb
 
 async function main() {
     await mongoose.connect(process.env.DB_URL);

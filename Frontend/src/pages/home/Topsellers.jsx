@@ -1,7 +1,8 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import BookCard from './books/bookcard'
 import { Pagination, Navigation } from 'swiper/modules'
+import { useFetchAllBooksQuery } from '../../redux/features/cart/books/booksApi'
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,16 +20,16 @@ import 'swiper/css/navigation';
 const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
 
 const Topsellers = () => {
-const [books, setBooks] = useState([])
+
 const [selectedCategory, setSelectedCategory] = useState("Choose a genre")
+         const {data} = useFetchAllBooksQuery()
+         const books = data?.books || [];
+         
+
     
-    useEffect(() => {
-        fetch('books.json')
-        .then((response) => response.json())
-        .then((data) => setBooks(data))
-        },[])
-        const filteredBooks = selectedCategory === "Choose a genre" ? books : books.filter((book) => book.category === selectedCategory.toLowerCase())
-        console.log(filteredBooks)
+    
+        const filteredBooks = selectedCategory === "Choose a genre" ? books : books.filter((book) => book.category?.toLowerCase() === selectedCategory.toLowerCase())
+        
 
   return (
     <>
@@ -40,8 +41,9 @@ const [selectedCategory, setSelectedCategory] = useState("Choose a genre")
 
     <div className='mb-8 flex items-center'> 
         <select 
+         name="category" id="category" 
         onChange={(e) => setSelectedCategory(e.target.value)}
-        name="category" id="category" className='border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none'>
+         className='border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none'>
 
            {categories.map((category, index) => (
             <option key={index} value={category}>{category}</option>
