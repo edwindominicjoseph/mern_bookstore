@@ -1,12 +1,74 @@
-# React + Vite
+# 🌐 MERN Stack Web Application (Work in Progress)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a full-stack web application being built using the MERN stack: **MongoDB, Express, React, and Node.js**. The project is currently in active development. The backend and frontend are in progress, and future updates will integrate DevOps tools like Docker, GitHub Actions, Ansible, Terraform, and NGINX.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚧 Current Status
 
-## Expanding the ESLint configuration
+- [x] Project initialized
+- [ ] Backend API development (in progress)
+- [ ] React frontend UI (in progress)
+- [ ] User authentication (planned)
+- [ ] DevOps pipeline setup (future)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+
+| Layer     | Tech                          |
+|-----------|-------------------------------|
+| Frontend  | React, Vite, Tailwind CSS     |
+| Backend   | Node.js, Express.js           |
+| Database  | MongoDB, Mongoose             |
+| Tools     | Git, Postman, VS Code         |
+
+---
+
+## 📦 Installation (Local Development)
+
+### Backend
+
+```bash
+cd backend
+npm install
+cp .env.example .env  # Add MongoDB URI and other environment variables
+npm run dev
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:5000`
+
+---
+
+## 📂 Folder Structure
+
+```
+/frontend      # React + Vite application
+/backend       # Node.js + Express API
+```
+
+---
+
+## 📅 Roadmap
+
+- [ ] Complete API development (routes, controllers, middleware)
+- [ ] Build and connect frontend with backend
+- [ ] Add authentication with JWT
+- [ ] Setup Docker and docker-compose
+- [ ] Automate with GitHub Actions (CI/CD)
+- [ ] Provision infrastructure with Terraform
+- [ ] Configure servers using Ansible
+- [ ] Deploy with NGINX and SSL
+
+---
+
+
