@@ -50,7 +50,7 @@ return (
                     <div> 
                         {
                             currentUser ? <>
-                            <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} >
+                            <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} aria-label="Toggle User Dropdown" >
                                 <img src={avatarimg} alt="User avatar" className={`size-6 rounded-full ${currentUser ? 'ring-2 ring-blue-500' : ''}`} />
                             </button>
                                 {isDropdownOpen && (
@@ -75,7 +75,7 @@ return (
                        
                     </div>
                     
-                    <button className='hidden sm:block'>
+                    <button  aria-label="Wishlist Button" className='hidden sm:block'>
                             <HiOutlineHeart className='size-6' />
                     </button>
                     <Link to="/cart" className='bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm'>
