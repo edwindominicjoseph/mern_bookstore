@@ -14,7 +14,10 @@ app.use(cors({
 
 //*routes
 const bookRoute = require('./src/Books/book.route')
+const orderRoute = require('./src/orders/order.route');
 app.use("/api/books", bookRoute);
+app.use("/api/orders", orderRoute);
+
 
 // *connect to mongodb
 

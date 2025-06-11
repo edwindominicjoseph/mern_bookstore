@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import BookCard from './books/bookcard'
 import { Pagination, Navigation } from 'swiper/modules'
-import { useFetchAllBooksQuery } from '../../redux/features/cart/books/booksApi'
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';

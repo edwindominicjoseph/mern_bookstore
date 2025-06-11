@@ -4,7 +4,7 @@ import getImgUrl from '../../../utils/gettingImgUrl';
 import { FiShoppingCart } from 'react-icons/fi'
 import { useDispatch } from 'react-redux'
 import {addToCart} from '../../../redux/features/cart/cartSlice';
-import { useFetchBookByIdQuery } from '../../../redux/features/cart/books/booksApi';
+import { useFetchBookByIdQuery } from '../../../redux/features/books/booksApi';
 
 
 const singlebook = () => {
