@@ -3,31 +3,62 @@ import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../context/authcontext';
+import { useCreateOrderMutation } from '../../../redux/features/orders/orderapi';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
     const { register, handleSubmit } = useForm();
 
+    const [createOrder, { isLoading, error }] = useCreateOrderMutation();
+
     const [isChecked, setIsChecked] = useState(false);
     const { currentUser } = useAuth();
+    const navigate = useNavigate();
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
         const newOrder = {
             name: data.name,
             email: currentUser?.email,
             address: {
-                city: data.city,
-                country: data.country,
-                state: data.state,
-                zipcode: data.zipcode
+            city: data.city,
+            country: data.country,
+            state: data.state,
+            zipcode: data.zipcode
             },
             phone: data.phone,
             productIds: cartItems.map(item => item?._id),
             totalPrice: totalPrice,
         };
+        try { 
+            await createOrder(newOrder).unwrap();
+            // Optionally show a success message or redirect
+            Swal.fire({
+                title: "Order Placed Successfully!",
+                text: "Your order has been placed successfully.",   
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "OK",
+
+  
+            })
+            navigate('/orders');
+        } catch (error) {
+            console.error("Error creating order", error);
+            alert("Failed to create order. Please try again later.");
+        }
         console.log(newOrder);
+        // Optionally, redirect to a success page or clear the cart
+        // e.g., navigate('/order-success');
+        // Or clear the cart items in the Redux store
+        // dispatch(clearCart());
     };
+    if (isLoading) {
+        return <div className="text-center">Processing your order...</div>;
+    }
 
     return (
         <section>

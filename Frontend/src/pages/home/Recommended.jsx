@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { useFetchAllBooksQuery } from '../../redux/features/cart/books/booksApi';
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 const Recommended = () => {
   
