@@ -43,3 +43,12 @@ cd backend
 npm install
 cp .env.example .env  # Add MongoDB URI and other environment variables
 npm run dev
+
+### 🧪 How to Test Linting Manually
+
+```bash
+# Lint all frontend and backend files
+npm run lint
+
+# Auto-fix issues
+npm run lint:fix
