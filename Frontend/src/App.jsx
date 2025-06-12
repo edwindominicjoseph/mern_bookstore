@@ -1,8 +1,8 @@
-import './App.css'
-import { Outlet } from 'react-router-dom'
-import Navbar from './components/navbar'
-import Footer from './components/Footer'
-import { AuthProvide } from './context/authcontext'
+import "./App.css";
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/navbar";
+import Footer from "./components/Footer";
+import { AuthProvide } from "./context/authcontext";
 function App() {
   return (
     <>
@@ -17,4 +17,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
