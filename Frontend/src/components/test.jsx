@@ -1,2 +1,5 @@
-const x =   1
-console.log(x)
+const name = "HuskyTest";
+function greet() {
+  console.log("Hello, " + name);
+}
+greet();
