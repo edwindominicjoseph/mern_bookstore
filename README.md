@@ -1,4 +1,4 @@
-# 🌐 MERN Stack Web Application (Complete – Phase 1)
+# 🌐 MERN Stack Web Application (Under Progress)
 
 This is a full-stack web application built using the MERN stack: **MongoDB, Express, React, and Node.js**. It simulates a modern online bookstore with user authentication, cart functionality, and a clean UI. The project is now moving toward DevOps integration and deployment.
 
@@ -47,7 +47,7 @@ This project enforces code quality with a modern, production-grade setup:
 
 ### 🧪 How to Test Linting Manually
 
-```bash
+
 # Lint all frontend and backend files
 npm run lint
 
@@ -55,23 +55,23 @@ npm run lint
 npm run lint:fix
 
 ---
-🪢 Pre-commit Hook
+# 🪢 Pre-commit Hook
 Runs automatically on git commit, thanks to Husky:
 npx lint-staged
 ✅ No poorly formatted code will sneak past this gate.
 
 ---
-📦 Installation & 🔧 Usage
+# 📦 Installation & 🔧 Usage
 
 
-📁 Setup Backend
+# 📁 Setup Backend
 cd Backend
 npm install
 cp .env.example .env
 npm run dev:start
 
 
-💻 Setup Frontend
+# 💻 Setup Frontend
 cd Frontend
 npm install
 npm run dev
