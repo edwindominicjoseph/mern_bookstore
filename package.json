@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "lint:fix": "npm run lint:fix:frontend && npm run lint:fix:backend",
+    "lint:frontend": "eslint Frontend --config Frontend/eslint.config.js --ext .js,.jsx",
+    "lint:backend": "eslint Backend --config Backend/eslint.config.mjs --ext .js,.jsx",
+    "lint:fix:frontend": "eslint Frontend --config Frontend/eslint.config.js --ext .js,.jsx --fix",
+    "lint:fix:backend": "eslint Backend --config Backend/eslint.config.mjs --ext .js,.jsx --fix",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
+    "prettier": "^3.5.3"
+  },
+  "lint-staged": {
+    "Frontend/**/*.{js,jsx}": [
+      "eslint --config Frontend/eslint.config.js --fix",
+      "prettier --write"
+    ],
+    "Backend/**/*.{js,jsx}": [
+      "eslint --config Backend/eslint.config.mjs --fix",
+      "prettier --write"
+    ]
+  }
+}
