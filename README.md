@@ -14,7 +14,7 @@ This is a full-stack web application built using the MERN stack: **MongoDB, Expr
 | 🔐 Auth System        | ✅ Complete  | Firebase-based Email + Google Sign-In auth system integrated                 |
 | 📦 State Management   | ✅ Complete  | Redux Toolkit used for cart and auth handling                               |
 | 🧪 Frontend Testing   | ✅ In Progress | In [separate repo](https://github.com/edwindominicjoseph/mern_bookstore_testing) using Vitest |
-| 🧹 Code Quality & Workflow | ✅ Active     | ESLint + Prettier with Husky + Lint-Staged for pre-commit checks              |
+| 🧹 Code Quality & Workflow | ✅ Active     |  ESLint and Prettier integration with Husky and lint-staged for automated pre-commit checks.            |
 | ⚙️ DevOps Setup       | ⏳ Upcoming  | Docker, GitHub Actions, Terraform, NGINX, Ansible planned                   |
 
 ---
