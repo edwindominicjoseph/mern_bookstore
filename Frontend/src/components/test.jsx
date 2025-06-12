@@ -1,5 +1,5 @@
-const name = "HuskyTest";
-function greet() {
-  console.log("Hello, " + name);
+let result = 0;
+for (let i = 0; i < 5; i++) {
+  result += i;
 }
-greet();
+console.log("Sum is " + result);
