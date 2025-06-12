@@ -32,6 +32,51 @@ This is a full-stack web application built using the MERN stack: **MongoDB, Expr
 | DevOps      | Docker, GitHub Actions, Terraform, NGINX |
 | Tools       | Git, Postman, VS Code                    |
 
+
 ---
 
+## 🧹 Code Quality & Workflow
+
+This project enforces code quality with a modern, production-grade setup:
+
+- **ESLint (Flat Config)** for both Frontend and Backend
+- **Prettier** for consistent formatting across the full stack
+- **Husky** Git hooks to prevent bad code from being committed
+- **lint-staged** to lint and format only staged files
+- **VS Code integration** with auto-fix on save supported
+
+### 🧪 How to Test Linting Manually
+
+```bash
+# Lint all frontend and backend files
+npm run lint
+
+# Auto-fix issues
+npm run lint:fix
+
+---
+🪢 Pre-commit Hook
+Runs automatically on git commit, thanks to Husky:
+npx lint-staged
+✅ No poorly formatted code will sneak past this gate.
+
+---
+📦 Installation & 🔧 Usage
+
+
+📁 Setup Backend
+cd Backend
+npm install
+cp .env.example .env
+npm run dev:start
+
+
+💻 Setup Frontend
+cd Frontend
+npm install
+npm run dev
+
+
+
+---
 
