@@ -1,29 +1,25 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
-import BookCard from './books/bookcard'
-import { Pagination, Navigation } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'; 
+import React from "react";
+import BookCard from "./books/bookcard";
+import { Pagination, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 
 const Recommended = () => {
-  
-      const {data} = useFetchAllBooksQuery()
-               const books = data?.books || [];
-    
-          
-  
+  const { data } = useFetchAllBooksQuery();
+  const books = data?.books || [];
+
   return (
-    <div className='py-16'>
-      <h2 className='text-3xl font-semibold mb-6'>Recommended for you</h2>
+    <div className="py-16">
+      <h2 className="text-3xl font-semibold mb-6">Recommended for you</h2>
       <Swiper
         slidesPerView={1}
         spaceBetween={30}
-        navigation={true} 
+        navigation={true}
         pagination={{ clickable: true }}
         breakpoints={{
           640: {
@@ -46,15 +42,15 @@ const Recommended = () => {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        {books.length > 0 && books.slice(8,16).map((book, index) => (
-          <SwiperSlide key={index}>
-            <BookCard book={book} />
-          </SwiperSlide>
-        ))}
+        {books.length > 0 &&
+          books.slice(8, 16).map((book, index) => (
+            <SwiperSlide key={index}>
+              <BookCard book={book} />
+            </SwiperSlide>
+          ))}
       </Swiper>
-    
     </div>
-  )
-}
+  );
+};
 
-export default Recommended
+export default Recommended;
