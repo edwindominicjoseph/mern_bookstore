@@ -87,7 +87,7 @@ const Navbar = () => {
                 )}
               </>
             ) : (
-              <Link to="/login">
+              <Link to="/login" aria-label="Login">
                 {" "}
                 <HiOutlineUser className="size-6" />{" "}
               </Link>
