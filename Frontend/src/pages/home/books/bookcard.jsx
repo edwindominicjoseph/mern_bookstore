@@ -30,10 +30,11 @@ const BookCard = ({ book }) => {
             </h3>
           </Link>
           <p className="text-gray-600 mb-5">
-            {book?.description.length > 80
-              ? `${book?.description.slice(0, 80)}...`
-              : book.description}
+            {book?.description?.length > 80
+              ? `${book.description.slice(0, 80)}...`
+              : book?.description || "No description"}
           </p>
+
           <p className="font-medium mb-5">
             ${book?.oldPrice}
             <span className="line-through font-normal ml-2">

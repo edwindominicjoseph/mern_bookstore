@@ -18,7 +18,8 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.0",
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "vitest": "^3.2.3"
   },
   "lint-staged": {
     "Frontend/**/*.{js,jsx}": [
