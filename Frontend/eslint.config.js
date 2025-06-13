@@ -7,7 +7,6 @@ import vitest from "eslint-plugin-vitest";
 export default [
   { ignores: ["dist"] },
 
-  // JS/React Config
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
@@ -35,19 +34,17 @@ export default [
     },
   },
 
-  // ✅ Vitest config for test files
   {
     files: ["**/*.{test,spec}.{js,jsx}"],
     languageOptions: {
       ecmaVersion: "latest",
       globals: {
         ...globals.node,
-        vi: true,
-        describe: true,
-        it: true,
-        expect: true,
-        beforeEach: true,
-        afterEach: true,
+        ...vitest.environments.globals,
+      },
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+        sourceType: "module",
       },
     },
     plugins: {
