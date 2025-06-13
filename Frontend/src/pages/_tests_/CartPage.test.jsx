@@ -5,6 +5,9 @@ import configureStore from "redux-mock-store";
 import { MemoryRouter } from "react-router-dom";
 import { removeFromCart, clearCart } from "../../redux/features/cart/cartSlice";
 
+// Import Vitest globals for mocking and testing
+import { vi, describe, it, expect, beforeEach } from "vitest";
+
 vi.mock("../../../../redux/features/cart/cartSlice", () => ({
   removeFromCart: vi.fn((product) => ({
     type: "cart/removeFromCart",
