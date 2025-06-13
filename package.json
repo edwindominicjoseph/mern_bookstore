@@ -6,7 +6,9 @@
     "lint:backend": "eslint Backend --config Backend/eslint.config.mjs --ext .js,.jsx",
     "lint:fix:frontend": "eslint Frontend --config Frontend/eslint.config.js --ext .js,.jsx --fix",
     "lint:fix:backend": "eslint Backend --config Backend/eslint.config.mjs --ext .js,.jsx --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "prettier --write .",
+    "check-format": "prettier --check ."
   },
   "devDependencies": {
     "eslint": "^9.28.0",
