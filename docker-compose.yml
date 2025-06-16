@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./Backend
+    container_name: backend
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - DB_URL=${DB_URL}
+      - PORT=${PORT}
+
+    volumes:
+      - ./Backend:/app
+    restart: always
+
+  frontend:
+    build: ./Frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always
