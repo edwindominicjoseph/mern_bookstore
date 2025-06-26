@@ -1,34 +1,35 @@
-
-
 # 📚 MERN Bookstore – BookVerse
 
-An end-to-end full-stack bookstore web application built with the **MERN stack** (MongoDB, Express, React, Node.js) featuring user authentication, cart functionality, code quality enforcement (ESLint + Prettier), GitHub Actions CI, and Husky-based pre-commit checks.
+An end-to-end full-stack bookstore web application built with the MERN stack (MongoDB, Express, React, Node.js) featuring user authentication, cart functionality, unit testing, Docker support, code quality enforcement, CI/CD with GitHub Actions, and Husky-based pre-commit checks.
 
 ---
 
 ## 🚀 Features
 
-- 📘 Book listing with genres
-- 🛒 Cart with quantity and price handling
-- 🔐 Firebase Authentication (Email + Google Sign-In)
-- 🖥️ Vite + Tailwind frontend
-- ⚙️ Express + MongoDB backend
-- 🔄 RESTful APIs (Books, Orders)
-- ✅ Linting + Formatting (ESLint v9 + Prettier)
-- 🔧 GitHub Actions CI for code quality checks
-- 🧪 Husky + lint-staged pre-commit hook
+- 📘 Book listing with genres  
+- 🛒 Cart with quantity and price handling  
+- 🔐 Firebase Authentication (Email + Google Sign-In)  
+- 🖥️ Vite + Tailwind frontend  
+- ⚙️ Express + MongoDB backend  
+- 🔄 RESTful APIs (Books, Orders)  
+- ✅ Linting + Formatting (ESLint v9 + Prettier)  
+- 🧪 Unit Testing with Vitest & React Testing Library  
+- 🐳 Dockerized Frontend and Backend  
+- 🔧 GitHub Actions CI for code quality checks  
+- 🧪 Husky + lint-staged pre-commit hook  
 
 ---
 
 ## 🧱 Tech Stack
 
-| Layer        | Tech                                      |
-|--------------|-------------------------------------------|
-| Frontend     | React, Vite, Tailwind CSS, Redux Toolkit  |
-| Backend      | Node.js, Express.js, MongoDB, Mongoose    |
-| Auth         | Firebase (Email, Google)                  |
-| Dev Tools    | ESLint v9, Prettier, Husky, lint-staged   |
-| CI/CD        | GitHub Actions                            |
+| Layer     | Tech                                               |
+|-----------|----------------------------------------------------|
+| Frontend  | React, Vite, Tailwind CSS, Redux Toolkit           |
+| Backend   | Node.js, Express.js, MongoDB, Mongoose             |
+| Auth      | Firebase (Email, Google)                           |
+| Dev Tools | ESLint v9, Prettier, Husky, lint-staged, Docker    |
+| Testing   | Vitest, React Testing Library                      |
+| CI/CD     | GitHub Actions                                     |
 
 ---
 
@@ -39,53 +40,50 @@ mern_bookstore/
 ├── Frontend/ # React + Vite + Tailwind frontend
 ├── .github/workflows/ # GitHub Actions (CI config)
 ├── .husky/ # Git hooks (pre-commit)
+├── docker-compose.yml # Docker setup
 ├── .prettierignore # Files to skip Prettier
 ├── package.json # Root scripts and devDeps
 └── README.md # This file
-
 
 
 ---
 
 ## 🧪 Local Setup
 
-### 1. Clone the project
+1. **Clone the project**  
+```bash
+git clone https://github.com/edwindominicjoseph/mern_bookstore.git  
+cd mern_bookstore  
 
 
-cd mern_bookstore
-2. Install dependencies
+npm install                # for root tools (Husky, Prettier, ESLint)  
+cd Frontend && npm install  
+cd ../Backend && npm install  
 
-npm install         # for root (Husky, Prettier, ESLint)
-cd Frontend && npm install
-cd ../Backend && npm install
-3. Configure Firebase
 
-Frontend/src/firebase/firebase.config.js
-→ Add your Firebase app config (API key, project ID, etc.)
-
-4. Create a .env file for backend
-PORT=5000
-DB_URL=your_mongodb_connection_string
 🖥️ Run the App Locally
+Backend
+cd Backend  
+npm start  
 
-# In one terminal
-cd Backend
-npm start
 
-# In another terminal
-cd Frontend
-npm run dev
 
+Frontend
+cd Frontend  
+npm run dev  
+Or Run with Docker
+
+docker-compose up --build  
 ✅ Code Quality Commands
-
-# Lint everything
+Lint everything
 npm run lint
 
-# Format all code
+Format all code
 npm run format
 
-# Check formatting (CI uses this)
+Check formatting (CI uses this)
 npm run check-format
+
 ✅ Pre-commit checks (Husky + lint-staged) auto-run on git commit.
 
 🔄 GitHub Actions CI
@@ -95,44 +93,30 @@ ESLint (Frontend + Backend)
 
 Prettier check
 
+(Planned) Build & Unit test steps
+
 Fails early if code style is incorrect
 
-Check: Actions tab
+Check: Actions tab on GitHub
 
-🧠 Prettier Ignore Config
-Files like the following are excluded from formatting:
+🧪 Testing
+✅ Frontend Unit Tests using Vitest & React Testing Library
 
-arduino
-Copy
-Edit
-node_modules/
-dist/
-public/
-README.md
-.github/
-.env
-You can modify this in .prettierignore.
+cd Frontend && npm run test
 
 🔧 Future Enhancements
- Add search & sorting
+🔍 Search & sorting
 
- Payment integration
+💳 Payment integration
 
- Order history + dashboard
+📊 Order history + admin dashboard
 
- Unit testing (Vitest)
+🧪 Backend unit & integration testing
 
- CI: Add test + build steps
-
- Deployment (Render + Vercel)
+🚀 Deployment (Render + Vercel)
 
 👨‍💻 Author
 Edwin Dominic Joseph
 GitHub: @edwindominicjoseph
-Live Demo (when deployed): coming soon
+Live Demo (coming soon)
 
-📄 License
-This project is open-sourced under the MIT License.
-
-
----
