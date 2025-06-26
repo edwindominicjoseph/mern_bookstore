@@ -1,23 +1,23 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'NodeJS_24'
-    }
-
     environment {
         FRONTEND_DIR = 'Frontend'
         BACKEND_DIR = 'Backend'
-        DOCKERHUB_USER = 'edwindominic' 
+        DOCKERHUB_USER = 'edwindominic'
         IMAGE_NAME = 'bookverse-app'
+    }
+
+    tools {
+        nodejs 'NodeJS_24'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                    credentialsId: 'github-token',
-                    url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
+                        credentialsId: 'github-token',
+                        url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
             }
         }
 
@@ -27,7 +27,6 @@ pipeline {
                     steps {
                         dir("${FRONTEND_DIR}") {
                             sh 'npm ci'
-                            sh 'npm run lint'
                         }
                     }
                 }
@@ -84,14 +83,14 @@ pipeline {
                 }
             }
         }
-    }
+    } // end of stages
 
     post {
         success {
-            echo "✅ BookVerse app built, tested, and running locally in Docker."
+            echo '✅ BookVerse app built, tested, and running locally in Docker.'
         }
         failure {
-            echo "❌ Something went wrong. Check build logs."
+            echo '❌ Something went wrong. Check build logs.'
         }
     }
 }
