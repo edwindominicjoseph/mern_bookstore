@@ -9,7 +9,6 @@ services:
     environment:
       - DB_URL=${DB_URL}
       - PORT=${PORT}
-
     volumes:
       - ./Backend:/app
     restart: always
