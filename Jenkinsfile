@@ -12,6 +12,7 @@ pipeline {
         nodejs 'NodeJS_24'
     }
 
+    stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
