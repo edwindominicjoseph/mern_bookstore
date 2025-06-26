@@ -45,7 +45,7 @@ pipeline {
             steps {
                 dir("${FRONTEND_DIR}") {
                     bat 'if not exist test-results mkdir test-results'
-                    bat 'npm run test -- --ci --run'
+                    bat 'npm run test'
                 }
             }
         }
