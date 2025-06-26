@@ -72,17 +72,18 @@ pipeline {
         }
 
         stage('Docker Run (Locally)') {
-            steps {
-                echo '🐳 Running local Docker containers...'
-                script {
-                    bat 'docker rm -f bookverse-frontend || exit 0'
-                    bat 'docker rm -f bookverse-backend || exit 0'
+    steps {
+        echo '🐳 Running local Docker containers using docker-compose...'
+        script {
+            // Stop and remove any existing containers
+            bat 'docker-compose down || exit 0'
 
-                    bat "docker run -d --name bookverse-backend -p 5000:5000 ${IMAGE_NAME}-backend:local"
-                    bat "docker run -d --name bookverse-frontend -p 5173:5173 ${IMAGE_NAME}-frontend:local"
-                }
-            }
+            // Rebuild images and start containers
+            bat 'docker-compose up -d --build'
         }
+    }
+}
+
     }
 
     post {
