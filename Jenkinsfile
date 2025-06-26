@@ -12,7 +12,6 @@ pipeline {
         nodejs 'NodeJS_24'
     }
 
-    stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -21,20 +20,19 @@ pipeline {
             }
         }
 
-        stage('Install & Lint') {
+        stage('Install Dependencies') {
             parallel {
-                stage('Frontend Setup') {
+                stage('Install Frontend') {
                     steps {
                         dir("${FRONTEND_DIR}") {
                             bat 'npm ci'
                         }
                     }
                 }
-                stage('Backend Setup') {
+                stage('Install Backend') {
                     steps {
                         dir("${BACKEND_DIR}") {
                             bat 'npm ci'
-                            
                         }
                     }
                 }
@@ -58,32 +56,13 @@ pipeline {
             }
         }
 
-        stage('Docker Build (Frontend + Backend)') {
+        stage('Docker Compose Up') {
             steps {
-                script {
-                    dir("${FRONTEND_DIR}") {
-                        bat "docker build -t ${IMAGE_NAME}-frontend:local ."
-                    }
-                    dir("${BACKEND_DIR}") {
-                        bat "docker build -t ${IMAGE_NAME}-backend:local ."
-                    }
-                }
+                echo '🐳 Running Docker Compose for local containers...'
+                bat 'docker-compose down || exit 0'
+                bat 'docker-compose up -d --build'
             }
         }
-
-        stage('Docker Run (Locally)') {
-    steps {
-        echo '🐳 Running local Docker containers using docker-compose...'
-        script {
-            // Stop and remove any existing containers
-            bat 'docker-compose down || exit 0'
-
-            // Rebuild images and start containers
-            bat 'docker-compose up -d --build'
-        }
-    }
-}
-
     }
 
     post {
@@ -91,7 +70,7 @@ pipeline {
             echo '✅ BookVerse app built, tested, and running locally in Docker.'
         }
         failure {
-            echo '❌ Something went wrong. Check build logs.'
+            echo '❌ Build failed. Please check logs.'
         }
     }
 }
