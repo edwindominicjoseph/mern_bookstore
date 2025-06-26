@@ -58,12 +58,14 @@ pipeline {
         }
 
         stage('Docker Compose Up') {
-            steps {
-                echo '🐳 Running Docker Compose for local containers...'
-                bat 'docker-compose down || exit 0'
-                bat 'docker-compose up -d --build'
-            }
+    steps {
+        echo '🐳 Running Docker Compose for local containers...'
+        dir("${env.WORKSPACE}") {
+            bat 'docker-compose down || exit 0'
+            bat 'docker-compose up -d --build'
         }
+    }
+}
     }
 
     post {
