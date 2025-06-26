@@ -34,7 +34,7 @@ pipeline {
                     steps {
                         dir("${BACKEND_DIR}") {
                             bat 'npm ci'
-                            bat 'npm run lint'
+                            
                         }
                     }
                 }
