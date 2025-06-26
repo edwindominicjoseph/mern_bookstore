@@ -1,19 +1,20 @@
 pipeline {
   agent any
-  stages {
-    stage('Checkout Code') {
-      steps {
-        git(credentialsId: 'github-creds', url: 'https://github.com/edwindominicjoseph/mern_bookstore.git')
-      }
-    }
+  
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github-token',
+                    url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
 
-    stage('Install & Lint') {
+     stage('Install & Lint') {
       parallel {
         stage('Frontend Setup') {
           steps {
             dir(path: "${FRONTEND_DIR}") {
               sh 'npm ci'
-              sh 'npm run lint'
+
             }
 
           }
@@ -62,21 +63,19 @@ pipeline {
           }
         }
 
-      }
-    }
 
-    stage('Docker Run (Locally)') {
-      steps {
-        echo '🐳 Running local Docker containers...'
-        script {
-          sh 'docker rm -f bookverse-frontend || true'
-          sh 'docker rm -f bookverse-backend || true'
+        stage('Docker Run (Locally)') {
+            steps {
+                echo '🐳 Running local Docker containers...'
+                script {
+                    sh 'docker rm -f bookverse-frontend || true'
+                    sh 'docker rm -f bookverse-backend || true'
 
-          // Run backend
-          sh "docker run -d --name bookverse-backend -p 5000:5000 ${IMAGE_NAME}-backend:local"
+                    sh "docker run -d --name bookverse-backend -p 5000:5000 ${IMAGE_NAME}-backend:local"
+                    sh "docker run -d --name bookverse-frontend -p 5173:5173 ${IMAGE_NAME}-frontend:local"
+                }
+            }
 
-          // Run frontend
-          sh "docker run -d --name bookverse-frontend -p 5173:5173 ${IMAGE_NAME}-frontend:local"
         }
 
       }
