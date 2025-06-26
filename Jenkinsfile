@@ -6,6 +6,9 @@ pipeline {
         BACKEND_DIR = 'Backend'
         DOCKERHUB_USER = 'edwindominic'
         IMAGE_NAME = 'bookverse-app'
+        FRONTEND_PORT = '3000'
+        BACKEND_PORT = '5000'
+        DB_URL = credentials('DB_URL')  // 👈 Stored in Jenkins as "Secret text"
     }
 
     tools {
@@ -57,12 +60,17 @@ pipeline {
             }
         }
 
-        stage('Docker Compose Up') {
+        stage('Run Docker Compose') {
             steps {
                 echo '🐳 Running Docker Compose for local containers...'
                 dir("${env.WORKSPACE}") {
+                    writeFile file: '.env', text: """
+                        PORT=${BACKEND_PORT}
+                        DB_URL=${DB_URL}
+                    """.stripIndent()
+
                     bat 'docker-compose down || exit 0'
-                    bat 'docker-compose up -d --build'
+                    bat 'docker-compose --env-file .env up -d --build'
                 }
             }
         }
@@ -70,10 +78,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ BookVerse app built, tested, and running locally in Docker.'
+            echo "✅ BookVerse is up: Frontend on http://localhost:${FRONTEND_PORT}, Backend on http://localhost:${BACKEND_PORT}"
         }
         failure {
-            echo '❌ Build failed. Please check logs.'
+            echo '❌ Build failed. Please check the logs above.'
         }
     }
 }
