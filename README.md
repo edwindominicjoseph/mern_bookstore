@@ -1,6 +1,6 @@
 # 📚 MERN Bookstore – BookVerse
 
-An end-to-end full-stack bookstore web application built with the MERN stack (MongoDB, Express, React, Node.js) featuring user authentication, cart functionality, unit testing, Docker support, code quality enforcement, CI/CD with GitHub Actions, and Husky-based pre-commit checks.
+An end-to-end full-stack bookstore web application built with the MERN stack (MongoDB, Express, React, Node.js) featuring user authentication, cart functionality, unit testing, Docker support, code quality enforcement, CI/CD with GitHub Actions, **Jenkins pipeline support**, and Husky-based pre-commit checks.
 
 ---
 
@@ -16,6 +16,7 @@ An end-to-end full-stack bookstore web application built with the MERN stack (Mo
 - 🧪 Unit Testing with Vitest & React Testing Library  
 - 🐳 Dockerized Frontend and Backend  
 - 🔧 GitHub Actions CI for code quality checks  
+- 🛠️ Jenkins-based local CI/CD pipeline  
 - 🧪 Husky + lint-staged pre-commit hook  
 
 ---
@@ -29,7 +30,7 @@ An end-to-end full-stack bookstore web application built with the MERN stack (Mo
 | Auth      | Firebase (Email, Google)                           |
 | Dev Tools | ESLint v9, Prettier, Husky, lint-staged, Docker    |
 | Testing   | Vitest, React Testing Library                      |
-| CI/CD     | GitHub Actions                                     |
+| CI/CD     | GitHub Actions, Jenkins                            |
 
 ---
 
@@ -38,11 +39,12 @@ An end-to-end full-stack bookstore web application built with the MERN stack (Mo
 mern_bookstore/
 ├── Backend/ # Express + MongoDB backend
 ├── Frontend/ # React + Vite + Tailwind frontend
-├── .github/workflows/ # GitHub Actions (CI config)
-├── .husky/ # Git hooks (pre-commit)
+├── Jenkinsfile # Jenkins CI pipeline for local builds
 ├── docker-compose.yml # Docker setup
-├── .prettierignore # Files to skip Prettier
-├── package.json # Root scripts and devDeps
+├── .github/workflows/ # GitHub Actions CI config
+├── .husky/ # Git hooks (pre-commit)
+├── .prettierignore # Prettier exclusion list
+├── package.json # Root tools and devDeps
 └── README.md # This file
 
 
@@ -50,60 +52,86 @@ mern_bookstore/
 
 ## 🧪 Local Setup
 
-1. **Clone the project**  
-```bash
+### 1. Clone the Project  
+
 git clone https://github.com/edwindominicjoseph/mern_bookstore.git  
-cd mern_bookstore  
-
-
-npm install                # for root tools (Husky, Prettier, ESLint)  
+cd mern_bookstore
+2. Install Dependencies
+npm install                 # Root tools (Husky, Prettier, ESLint)
 cd Frontend && npm install  
 cd ../Backend && npm install  
-
-
 🖥️ Run the App Locally
-Backend
-cd Backend  
-npm start  
+✅ Using npm
 
+# Backend
+cd Backend
+npm start
 
+# Frontend
+cd ../Frontend
+npm run dev
+🐳 Or Run with Docker
 
-Frontend
-cd Frontend  
-npm run dev  
-Or Run with Docker
+docker-compose up --build
+🔁 Jenkins CI/CD (Local)
+This project supports local continuous integration using Jenkins. The pipeline includes the following stages:
 
-docker-compose up --build  
+Checkout code from GitHub
+
+Install frontend & backend dependencies
+
+Run frontend unit tests
+
+Build frontend production bundle
+
+Spin up backend and frontend containers via Docker Compose
+
+✅ Setup Instructions
+Install Jenkins and Docker locally
+
+Add GitHub personal access token in Jenkins → Manage Credentials
+
+Add .env variables in Jenkins credential store or .env file
+
+Configure NodeJS (e.g., "NodeJS_24") in Jenkins global tools
+
+Run the pipeline using the Jenkinsfile in the root directory
+
+🔒 Secrets Management
+Use Secret Text credentials in Jenkins for secure environment variables (e.g., DB_URL, PORT)
+
+Inject them using the environment {} block in the Jenkinsfile or bind them to the shell
+
 ✅ Code Quality Commands
-Lint everything
+bash
+Copy
+Edit
+# Lint
 npm run lint
 
-Format all code
+# Format
 npm run format
 
-Check formatting (CI uses this)
+# Format check (used in CI)
 npm run check-format
-
-✅ Pre-commit checks (Husky + lint-staged) auto-run on git commit.
+✅ Pre-commit checks (Husky + lint-staged) auto-run on git commit
 
 🔄 GitHub Actions CI
-Runs on every push or PR:
+Automatically runs on push/PR:
 
-ESLint (Frontend + Backend)
+ESLint (frontend + backend)
 
 Prettier check
 
-(Planned) Build & Unit test steps
+(Planned) Build & test pipeline
 
-Fails early if code style is incorrect
-
-Check: Actions tab on GitHub
+Check logs in GitHub → Actions tab
 
 🧪 Testing
-✅ Frontend Unit Tests using Vitest & React Testing Library
 
+
+# Frontend Unit Tests
 cd Frontend && npm run test
-
 🔧 Future Enhancements
 🔍 Search & sorting
 
@@ -113,10 +141,9 @@ cd Frontend && npm run test
 
 🧪 Backend unit & integration testing
 
-🚀 Deployment (Render + Vercel)
+🚀 Deployment (Render + Vercel or Docker with Jenkins)
 
 👨‍💻 Author
 Edwin Dominic Joseph
 GitHub: @edwindominicjoseph
-Live Demo (coming soon)
-
+📺 Live Demo: Coming Soon
