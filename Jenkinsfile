@@ -16,8 +16,8 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                        credentialsId: 'github-token',
-                        url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
+                    credentialsId: 'github-token',
+                    url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
             }
         }
 
@@ -26,15 +26,15 @@ pipeline {
                 stage('Frontend Setup') {
                     steps {
                         dir("${FRONTEND_DIR}") {
-                            sh 'npm ci'
+                            bat 'npm ci'
                         }
                     }
                 }
                 stage('Backend Setup') {
                     steps {
                         dir("${BACKEND_DIR}") {
-                            sh 'npm ci'
-                            sh 'npm run lint'
+                            bat 'npm ci'
+                            bat 'npm run lint'
                         }
                     }
                 }
@@ -44,8 +44,8 @@ pipeline {
         stage('Frontend Unit Tests') {
             steps {
                 dir("${FRONTEND_DIR}") {
-                    sh 'mkdir -p test-results'
-                    sh 'npm run test -- --ci --run'
+                    bat 'if not exist test-results mkdir test-results'
+                    bat 'npm run test -- --ci --run'
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir("${FRONTEND_DIR}") {
-                    sh 'npm run build'
+                    bat 'npm run build'
                 }
             }
         }
@@ -62,10 +62,10 @@ pipeline {
             steps {
                 script {
                     dir("${FRONTEND_DIR}") {
-                        sh "docker build -t ${IMAGE_NAME}-frontend:local ."
+                        bat "docker build -t ${IMAGE_NAME}-frontend:local ."
                     }
                     dir("${BACKEND_DIR}") {
-                        sh "docker build -t ${IMAGE_NAME}-backend:local ."
+                        bat "docker build -t ${IMAGE_NAME}-backend:local ."
                     }
                 }
             }
@@ -75,15 +75,15 @@ pipeline {
             steps {
                 echo '🐳 Running local Docker containers...'
                 script {
-                    sh 'docker rm -f bookverse-frontend || true'
-                    sh 'docker rm -f bookverse-backend || true'
+                    bat 'docker rm -f bookverse-frontend || exit 0'
+                    bat 'docker rm -f bookverse-backend || exit 0'
 
-                    sh "docker run -d --name bookverse-backend -p 5000:5000 ${IMAGE_NAME}-backend:local"
-                    sh "docker run -d --name bookverse-frontend -p 5173:5173 ${IMAGE_NAME}-frontend:local"
+                    bat "docker run -d --name bookverse-backend -p 5000:5000 ${IMAGE_NAME}-backend:local"
+                    bat "docker run -d --name bookverse-frontend -p 5173:5173 ${IMAGE_NAME}-frontend:local"
                 }
             }
         }
-    } // end of stages
+    }
 
     post {
         success {
