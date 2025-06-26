@@ -15,7 +15,9 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
+                git branch: 'main',
+                    credentialsId: 'github-token',
+                    url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
             }
         }
 
@@ -74,14 +76,10 @@ pipeline {
             steps {
                 echo '🐳 Running local Docker containers...'
                 script {
-                    // Clean up old containers if running
                     sh 'docker rm -f bookverse-frontend || true'
                     sh 'docker rm -f bookverse-backend || true'
 
-                    // Run backend
                     sh "docker run -d --name bookverse-backend -p 5000:5000 ${IMAGE_NAME}-backend:local"
-
-                    // Run frontend
                     sh "docker run -d --name bookverse-frontend -p 5173:5173 ${IMAGE_NAME}-frontend:local"
                 }
             }
