@@ -32,6 +32,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+output.log
 
 # ========================
 # Environment Config
@@ -40,6 +41,7 @@ lerna-debug.log*
 .env.*        # For Vite, Next.js, etc.
 *.local       # .env.local, vite.config.local, etc.
 .env.local
+
 # ========================
 # Coverage & Test Outputs
 # ========================
@@ -90,7 +92,7 @@ docker-compose.override.yml
 .dockerignore
 
 # ========================
-# Miscellaneous
+# SSH & Certificates
 # ========================
 *.pem
 *.key
@@ -99,3 +101,12 @@ docker-compose.override.yml
 # Ignore lock screen screenshots (macOS)
 Screen\ Shot*.png
 
+# ========================
+# Terraform
+# ========================
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+terraform.tfvars
+*.backup

@@ -6,9 +6,6 @@ pipeline {
         BACKEND_DIR = 'Backend'
         DOCKERHUB_USER = 'edwindominic'
         IMAGE_NAME = 'bookverse-app'
-        FRONTEND_PORT = '3000'
-        BACKEND_PORT = '5000'
-        DB_URL = credentials('DB_URL')  // 👈 Stored in Jenkins as "Secret text"
     }
 
     tools {
@@ -19,24 +16,25 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                    credentialsId: 'github-token',
-                    url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
+                        credentialsId: 'github-token',
+                        url: 'https://github.com/edwindominicjoseph/mern_bookstore.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install & Lint') {
             parallel {
-                stage('Install Frontend') {
+                stage('Frontend Setup') {
                     steps {
                         dir("${FRONTEND_DIR}") {
-                            bat 'npm ci'
+                            sh 'npm ci'
                         }
                     }
                 }
-                stage('Install Backend') {
+                stage('Backend Setup') {
                     steps {
                         dir("${BACKEND_DIR}") {
-                            bat 'npm ci'
+                            sh 'npm ci'
+                            sh 'npm run lint'
                         }
                     }
                 }
@@ -46,8 +44,8 @@ pipeline {
         stage('Frontend Unit Tests') {
             steps {
                 dir("${FRONTEND_DIR}") {
-                    bat 'if not exist test-results mkdir test-results'
-                    bat 'npm run test'
+                    sh 'mkdir -p test-results'
+                    sh 'npm run test -- --ci --run'
                 }
             }
         }
@@ -55,33 +53,44 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir("${FRONTEND_DIR}") {
-                    bat 'npm run build'
+                    sh 'npm run build'
                 }
             }
         }
 
-        stage('Run Docker Compose') {
+        stage('Docker Build (Frontend + Backend)') {
             steps {
-                echo '🐳 Running Docker Compose for local containers...'
-                dir("${env.WORKSPACE}") {
-                    writeFile file: '.env', text: """
-                        PORT=${BACKEND_PORT}
-                        DB_URL=${DB_URL}
-                    """.stripIndent()
-
-                    bat 'docker-compose down || exit 0'
-                    bat 'docker-compose --env-file .env up -d --build'
+                script {
+                    dir("${FRONTEND_DIR}") {
+                        sh "docker build -t ${IMAGE_NAME}-frontend:local ."
+                    }
+                    dir("${BACKEND_DIR}") {
+                        sh "docker build -t ${IMAGE_NAME}-backend:local ."
+                    }
                 }
             }
         }
-    }
+
+        stage('Docker Run (Locally)') {
+            steps {
+                echo '🐳 Running local Docker containers...'
+                script {
+                    sh 'docker rm -f bookverse-frontend || true'
+                    sh 'docker rm -f bookverse-backend || true'
+
+                    sh "docker run -d --name bookverse-backend -p 5000:5000 ${IMAGE_NAME}-backend:local"
+                    sh "docker run -d --name bookverse-frontend -p 5173:5173 ${IMAGE_NAME}-frontend:local"
+                }
+            }
+        }
+    } // end of stages
 
     post {
         success {
-            echo "✅ BookVerse is up: Frontend on http://localhost:${FRONTEND_PORT}, Backend on http://localhost:${BACKEND_PORT}"
+            echo '✅ BookVerse app built, tested, and running locally in Docker.'
         }
         failure {
-            echo '❌ Build failed. Please check the logs above.'
+            echo '❌ Something went wrong. Check build logs.'
         }
     }
 }
