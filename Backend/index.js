@@ -9,7 +9,11 @@ require("dotenv").config();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://mern3650.s3-website-us-east-1.amazonaws.com",
+    ],
     credentials: true,
   }),
 );
