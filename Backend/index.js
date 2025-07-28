@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-// *middleware */
+// Middleware
 app.use(express.json());
 app.use(
   cors({
@@ -18,24 +18,32 @@ app.use(
   }),
 );
 
-//*routes
+// Handle preflight requests (OPTIONS)
+app.options("*", cors());
+
+// Routes
 const bookRoute = require("./src/Books/book.route");
 const orderRoute = require("./src/orders/order.route");
 app.use("/api/books", bookRoute);
 app.use("/api/orders", orderRoute);
 
-// *connect to mongodb
-
+// Connect to MongoDB
 async function main() {
-  await mongoose.connect(process.env.DB_URL);
-  app.get("/", (req, res) => {
-    res.send("my server!");
-  });
+  try {
+    await mongoose.connect(process.env.DB_URL);
+    console.log("mongodb connected successfully");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+  }
 }
-main()
-  .then(() => console.log("mongodb connected sucessfully"))
-  .catch((err) => console.log(err));
+
+// Root endpoint
+app.get("/", (req, res) => {
+  res.send("my server!");
+});
+
+main();
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
