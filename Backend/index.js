@@ -6,10 +6,22 @@ const cors = require("cors");
 require("dotenv").config();
 
 // *middleware */
-app.use(express.json());
+
+const allowedOrigins = [
+  "http://mern3650.s3-website-us-east-1.amazonaws.com",
+  // other allowed origins
+];
+
 app.use(
   cors({
-    origin: "*",
+    origin: function (origin, callback) {
+      // allow requests with no origin (like curl, Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(new Error("CORS not allowed for this origin"), false);
+      }
+      return callback(null, origin);
+    },
     credentials: true,
   }),
 );
