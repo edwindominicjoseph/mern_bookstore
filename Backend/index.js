@@ -59,6 +59,28 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+  console.log(`📥 Incoming Request: ${req.method} ${fullUrl}`);
+
+  const start = process.hrtime();
+  res.on("finish", () => {
+    const duration = process.hrtime(start);
+    const durationInSec = duration[0] + duration[1] / 1e9;
+    const route = req.route?.path || req.path;
+
+    requestCounter.labels(req.method, route, res.statusCode).inc();
+    requestDurationSummary
+      .labels(req.method, route, res.statusCode)
+      .observe(durationInSec);
+    requestDurationHistogram
+      .labels(req.method, route, res.statusCode)
+      .observe(durationInSec);
+  });
+
+  next();
+});
+
 app.get("/metrics", async (req, res) => {
   res.set("Content-Type", client.register.contentType);
   res.end(await client.register.metrics());
@@ -70,7 +92,7 @@ app.get("/health", (req, res) => {
 });
 
 // ✅ CORS for CloudFront domain
-const allowedOrigins = ["https://api.edwindominicjoseph.store/api/books/"];
+const allowedOrigins = ["https://mern.edwindominicjoseph.store"];
 
 app.use(
   cors({
