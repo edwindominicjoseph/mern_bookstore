@@ -70,7 +70,7 @@ app.get("/health", (req, res) => {
 });
 
 // ✅ CORS for CloudFront domain
-const allowedOrigins = ["https://mern.edwindominicjoseph.store"];
+const allowedOrigins = ["https://api.edwindominicjoseph.store/api/books/"];
 
 app.use(
   cors({
