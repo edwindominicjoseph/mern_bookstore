@@ -5,11 +5,13 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-//  Prometheus client setup
 const client = require("prom-client");
 client.collectDefaultMetrics();
 
-// Metrics definitions
+// Trust reverse proxy (for HTTPS + IPs)
+app.set("trust proxy", 1);
+
+// Metrics setup
 const requestCounter = new client.Counter({
   name: "http_requests_total",
   help: "Total HTTP requests",
@@ -34,12 +36,11 @@ const memoryUsageGauge = new client.Gauge({
   help: "Heap memory used in bytes",
 });
 
-// Memory usage tracking
 setInterval(() => {
   memoryUsageGauge.set(process.memoryUsage().heapUsed);
 }, 5000);
 
-//  Metrics middleware
+// Prometheus middleware
 app.use((req, res, next) => {
   const start = process.hrtime();
   res.on("finish", () => {
@@ -58,14 +59,18 @@ app.use((req, res, next) => {
   next();
 });
 
-// Expose /metrics endpoint
 app.get("/metrics", async (req, res) => {
   res.set("Content-Type", client.register.contentType);
   res.end(await client.register.metrics());
 });
 
-// ✅ Middleware
-const allowedOrigins = ["http://mern3650.s3-website-us-east-1.amazonaws.com"];
+// ✅ Optional health check route
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
+// ✅ CORS for CloudFront domain
+const allowedOrigins = ["https://mern.edwindominicjoseph.store"];
 
 app.use(
   cors({
@@ -86,18 +91,19 @@ const orderRoute = require("./src/orders/order.route");
 app.use("/api/books", bookRoute);
 app.use("/api/orders", orderRoute);
 
-// Connect to MongoDB and define root
+// Connect to MongoDB
 async function main() {
   await mongoose.connect(process.env.DB_URL);
   app.get("/", (req, res) => {
     res.send("my server!");
   });
 }
+
 main()
   .then(() => console.log("MongoDB connected successfully"))
   .catch((err) => console.log(err));
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// ✅ Restrict server to localhost only (NGINX proxy handles public)
+app.listen(port, "127.0.0.1", () => {
+  console.log(`Server running securely on http://127.0.0.1:${port}`);
 });
